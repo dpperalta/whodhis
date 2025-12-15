@@ -150,7 +150,7 @@ const getMaHolder = async ( req = request, res = response ) => {
     const abbreviation = req.query.abbreviation || '';
     const drugName = req.query.drugName || '';
     try {
-        const drugNameCount = await sequelize.query(`
+        const maHoldersCount = await sequelize.query(`
             SELECT COUNT (*)
                 FROM (
                 SELECT DISTINCT ON (vw."maHolders")
@@ -187,10 +187,10 @@ const getMaHolder = async ( req = request, res = response ) => {
                     AND vw."drugName" = '${drugName}'
             )) vaccines;
         `);
-        const count = drugNameCount[0][0].count;
+        const count = maHoldersCount[0][0].count;
         const total = totalMaHolders[0][0].count;
         if ( count > 0 ) { 
-            const drugNames = await sequelize.query(`
+            const maHolders = await sequelize.query(`
                 SELECT DISTINCT ON (vw."maHolders")
                     *
                 FROM "vaccinesWhodrug" vw 
@@ -212,7 +212,7 @@ const getMaHolder = async ( req = request, res = response ) => {
                 ok: true,
                 count,
                 total,
-                drugNames: drugNames[0]
+                maHolders: maHolders[0]
             });
         } else {
             return res.status(404).json({
@@ -235,7 +235,7 @@ const getForms = async ( req = request, res = response ) => {
     const drugName = req.query.drugName || '';
     const maHolders = req.query.maHolders || '';
     try {
-        const drugNameCount = await sequelize.query(`
+        const formsCount = await sequelize.query(`
             SELECT COUNT (*)
                 FROM (
                 SELECT DISTINCT ON (vw."formTranslations")
@@ -256,7 +256,7 @@ const getForms = async ( req = request, res = response ) => {
                     AND vw."maHolders" = '${maHolders}'
             )) vaccines;
         `);
-        const totalMaHolders = await sequelize.query(`
+        const totalForms = await sequelize.query(`
             SELECT COUNT (*)
                 FROM (
                 SELECT *
@@ -276,10 +276,10 @@ const getForms = async ( req = request, res = response ) => {
                     AND vw."maHolders" = '${maHolders}'
             )) vaccines;
         `);
-        const count = drugNameCount[0][0].count;
-        const total = totalMaHolders[0][0].count;
+        const count = formsCount[0][0].count;
+        const total = totalForms[0][0].count;
         if ( count > 0 ) { 
-            const drugNames = await sequelize.query(`
+            const forms = await sequelize.query(`
                 SELECT DISTINCT ON (vw."formTranslations")
                     *
                 FROM "vaccinesWhodrug" vw 
@@ -303,7 +303,7 @@ const getForms = async ( req = request, res = response ) => {
                 ok: true,
                 count,
                 total,
-                drugNames: drugNames[0]
+                forms: forms[0]
             });
         } else {
             return res.status(404).json({
@@ -327,7 +327,7 @@ const getStrength = async ( req = request, res = response ) => {
     const maHolders = req.query.maHolders || '';
     const forms = req.query.forms || '';
     try {
-        const drugNameCount = await sequelize.query(`
+        const strengthCount = await sequelize.query(`
             SELECT COUNT (*)
                 FROM (
                 SELECT DISTINCT ON (vw."strength")
@@ -350,7 +350,7 @@ const getStrength = async ( req = request, res = response ) => {
                     AND vw."formTranslations" = '${forms}'
             )) vaccines;
         `);
-        const totalMaHolders = await sequelize.query(`
+        const totalStrength = await sequelize.query(`
             SELECT COUNT (*)
                 FROM (
                 SELECT *
@@ -372,10 +372,10 @@ const getStrength = async ( req = request, res = response ) => {
                     AND vw."formTranslations" = '${forms}'
             )) vaccines;
         `);
-        const count = drugNameCount[0][0].count;
-        const total = totalMaHolders[0][0].count;
+        const count = strengthCount[0][0].count;
+        const total = totalStrength[0][0].count;
         if ( count > 0 ) { 
-            const drugNames = await sequelize.query(`
+            const strengths = await sequelize.query(`
                 SELECT DISTINCT ON (vw."strength")
                     *
                 FROM "vaccinesWhodrug" vw 
@@ -401,7 +401,7 @@ const getStrength = async ( req = request, res = response ) => {
                 ok: true,
                 count,
                 total,
-                drugNames: drugNames[0]
+                strengths: strengths[0]
             });
         } else {
             return res.status(404).json({
