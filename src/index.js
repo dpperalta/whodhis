@@ -6,7 +6,9 @@ const { request, response } = require('express');
 
 // Environment variables loading
 //require('dotenv').config({ quiet: true });
-require('dotenv').config();
+require('dotenv').config({
+    path: require('path').resolve(__dirname, '../.env')
+});
 
 // API isntance
 const app = express();
