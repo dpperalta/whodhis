@@ -1,6 +1,5 @@
 const { Router }  = require('express');
 const { getAbbreviations, getDrugName, getMaHolder, getForms, getStrength } = require('../controllers/vaccinesWhodrug');
-const { route } = require('.');
 
 const router = Router();
 
