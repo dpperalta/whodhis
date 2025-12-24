@@ -92,6 +92,9 @@ const VaccinesWhoDrug = sequelize.define('vaccinesWhodrug', {
     isPreferred: {
         type: Sequelize.SMALLINT,
     }
+}, {
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = VaccinesWhoDrug;

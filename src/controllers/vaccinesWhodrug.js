@@ -418,10 +418,35 @@ const getStrength = async ( req = request, res = response ) => {
     }
 };
 
+const getInfoById = async ( req = request, res = response ) => {
+    const id = req.params.id;
+    try {
+        const vaccineInfo = await VaccinesWhoDrug.findByPk( id );
+        if ( !vaccineInfo ) {
+            return res.status(404).json({
+                ok: false,
+                msg: `No vaccine information found with id ${ id }`
+            });
+        }
+        return res.status(200).json({
+            ok: true,
+            vaccineInfo
+        });
+    } catch (error) {
+        console.log('Error fetching vaccine information by ID:', error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Internal Server Error'
+        });
+    }
+
+}
+
 module.exports = {
     getAbbreviations,
     getDrugName,
     getMaHolder,
     getForms,
-    getStrength
+    getStrength,
+    getInfoById
 };
